@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register page</title>
+
+  <meta name="description" content="Create an account to join our community and access exclusive features. Sign up for a free account.">
+  <meta name="keywords" content="sign up, registration, create account, join, user account">
+  <meta name="robots" content="index, follow"> 
+  <meta name="theme-color" content="#e8eef8"> 
+
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/start.css">
+</head> 
+<body>
+  <div class="cont">
+    <div id="register">
+      <h2>Register</h2>
+      <div class="sign-up">
+        <p>Already have an account?</p>
+        <a href="./reg.html">Sign In</a>
+      </div>
+      <form id="registerForm">
+        <label> Your email address <br>
+          <input type="email" id="registerEmail" placeholder="Email" required>
+          <small id="emailError" style="color: red; display: none;">Please enter a valid email address.</small>
+        </label>
+        <label> Your password <br>
+          <input type="password" id="registerPassword" placeholder="Password" required minlength="6">
+          <small id="passwordError" style="color: red; display: none;">Password must be at least 6 characters long.</small>
+          <small id="passwordComplexityError" style="color: red; display: none;">Password must include at least one number and one special character.</small>
+        </label>
+        <button type="submit" id="signUpBtn" disabled>Sign Up</button>
+      </form>
+    </div>  
+  </div>
+  <script src="./js/script.js"></script>
+  <script src="./js/sign-in-validation.js"></script>
+</body>
+</html>
