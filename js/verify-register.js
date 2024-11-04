@@ -13,7 +13,7 @@ document.getElementById('verifyForm').addEventListener('submit', async function(
     const code = document.getElementById('verificationCode').value;
 
     try {
-        const response = await fetch('https://f-excel-proj-backk.vercel.app/verify', { 
+        const response = await fetch('https://34.27.250.204/verify', { 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

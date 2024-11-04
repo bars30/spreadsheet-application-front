@@ -7,7 +7,7 @@ document.getElementById('requestCodeBtn').addEventListener('click', async () => 
     }
 
     try {
-        const response = await fetch('https://f-excel-proj-backk.vercel.app/forgot-password', { 
+        const response = await fetch('https://34.27.250.204/forgot-password', { 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

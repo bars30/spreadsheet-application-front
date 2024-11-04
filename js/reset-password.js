@@ -12,7 +12,7 @@ document.getElementById('resetPassForm').addEventListener('submit', async (event
     }
 
     try {
-        const response = await fetch('https://f-excel-proj-backk.vercel.app/reset-password', {
+        const response = await fetch('https://34.27.250.204/reset-password', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

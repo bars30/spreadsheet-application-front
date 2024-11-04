@@ -13,7 +13,7 @@ async function register() {
   const password = document.getElementById('registerPassword').value;
   console.log(JSON.stringify({ email, password }));
 
-  const url = "https://f-excel-proj-backk.vercel.app/register";
+  const url = "https://34.27.250.204/register";
   try {
     const response = await fetch(url, {
       method: 'POST',
@@ -42,7 +42,7 @@ async function register() {
 }
 
 async function getData() {
-  const url = "https://fvproj-back-6i3x.vercel.app/data";
+  const url = "https://34.27.250.204/data";
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -57,7 +57,7 @@ async function getData() {
 }
 
 async function getData2() {
-  const url = "https://fvproj-back-6i3x.vercel.app/users";
+  const url = "https://34.27.250.204/users";
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -75,7 +75,7 @@ async function login() {
   const email = document.getElementById('loginEmail').value;
   const password = document.getElementById('loginPassword').value;
 
-  const url = "https://f-excel-proj-backk.vercel.app/login"; 
+  const url = "https://34.27.250.204/login"; 
 
   try {
     const response = await fetch(url, {
