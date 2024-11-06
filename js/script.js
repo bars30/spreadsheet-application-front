@@ -1,3 +1,4 @@
+import { url  } from "./config.js";
 
 window.onload = function() {
   const token = localStorage.getItem('token'); 
@@ -5,17 +6,17 @@ window.onload = function() {
     window.location.href = './index.html'; 
   }
 };
-loginForm = document.getElementById('loginForm')
-registerForm = document.getElementById('registerForm')
+loginForm = document.getElementById('loginForm');
+registerForm = document.getElementById('registerForm');
 
 async function register() {
   const email = document.getElementById('registerEmail').value;
   const password = document.getElementById('registerPassword').value;
   console.log(JSON.stringify({ email, password }));
 
-  const url = "https://34.27.250.204/register";
+  const fetchUrl = url + "/register";
   try {
-    const response = await fetch(url, {
+    const response = await fetch(fetchUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -42,9 +43,9 @@ async function register() {
 }
 
 async function getData() {
-  const url = "https://34.27.250.204/data";
+  const fetchUrl = url + "/data";
   try {
-    const response = await fetch(url);
+    const response = await fetch(fetchUrl);
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
@@ -57,9 +58,9 @@ async function getData() {
 }
 
 async function getData2() {
-  const url = "https://34.27.250.204/users";
+  const fetchUrl = url + "/users";
   try {
-    const response = await fetch(url);
+    const response = await fetch(fetchUrl);
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
@@ -75,10 +76,10 @@ async function login() {
   const email = document.getElementById('loginEmail').value;
   const password = document.getElementById('loginPassword').value;
 
-  const url = "https://34.27.250.204/login"; 
+  const fetchUrl = url + "/login"; 
 
   try {
-    const response = await fetch(url, {
+    const response = await fetch(fetchUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

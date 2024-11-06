@@ -1,3 +1,5 @@
+import { url } from "./config.js";
+
 const urlParams = new URLSearchParams(window.location.search);
 const email = urlParams.get('email'); 
 
@@ -12,7 +14,7 @@ document.getElementById('resetPassForm').addEventListener('submit', async (event
     }
 
     try {
-        const response = await fetch('https://34.27.250.204/reset-password', {
+        const response = await fetch(url + '/reset-password', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

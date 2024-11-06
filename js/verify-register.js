@@ -1,3 +1,5 @@
+import { url } from "./config.js";
+
 window.onload = function() {
     const sendedRegistrationCode = localStorage.getItem('sendedRegistrationCode'); 
     if (!sendedRegistrationCode) {
@@ -13,7 +15,7 @@ document.getElementById('verifyForm').addEventListener('submit', async function(
     const code = document.getElementById('verificationCode').value;
 
     try {
-        const response = await fetch('https://34.27.250.204/verify', { 
+        const response = await fetch(url + '/verify', { 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

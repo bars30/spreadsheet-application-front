@@ -1,3 +1,5 @@
+import { url } from "./config.js";
+
 window.onload = function() {
  const token = localStorage.getItem('token'); 
  const inputs = document.querySelectorAll('.cell'); 
@@ -20,7 +22,7 @@ async function changePass() {
  }
 
  try {
-     const response = await fetch('/change-password', {
+     const response = await fetch(url + '/change-password', {
          method: 'POST',
          headers: {
              'Content-Type': 'application/json',

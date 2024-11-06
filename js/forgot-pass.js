@@ -1,3 +1,5 @@
+import { url } from "./config.js";
+
 document.getElementById('requestCodeBtn').addEventListener('click', async () => {
     const email = document.getElementById('forgotEmail').value;
 
@@ -7,7 +9,7 @@ document.getElementById('requestCodeBtn').addEventListener('click', async () => 
     }
 
     try {
-        const response = await fetch('https://34.27.250.204/forgot-password', { 
+        const response = await fetch(url + '/forgot-password', { 
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
