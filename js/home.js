@@ -65,6 +65,7 @@ window.onload = function() {
   
     if (colLetter === 'G') {
       cell.style.backgroundColor = "#E2EFDA";
+      cell.disabled = true;
     } else if (colLetter === 'A') {
       cell.style.backgroundColor = '#e8eef8';
       cell.oninput = () => handleAColumnInput(rowNumber);
