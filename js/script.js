@@ -1,32 +1,47 @@
-import { url  } from "./config.js";
+import { url } from "./config.js";
 
 window.onload = function() {
-  const token = localStorage.getItem('token'); 
+  const token = localStorage.getItem('token');
   if (token) {
-    window.location.href = './index.html'; 
+    window.location.href = './index.html';
   }
 
   const loginForm = document.getElementById('loginForm');
+  const loginBtn = document.getElementById('loginBtn');
+  const loginPassword = document.getElementById('loginPassword');
+  const passwordError = document.getElementById('passwordError');
+  const passwordErrorMax = document.getElementById('passwordErrorMax');
 
-  loginForm?.addEventListener("submit", (event)=>{
+  // Validate password length
+  loginPassword.addEventListener('input', () => {
     if (loginPassword.value.length < 6) {
-      event.preventDefault();
-      return;
-  
+      passwordError.style.display = 'inline';
+      loginBtn.disabled = true;
+    } else if (loginPassword.value.length > 20) {
+      passwordErrorMax.style.display = 'inline';
+      loginBtn.disabled = true;
+    } else {
+      passwordError.style.display = 'none';
+      passwordErrorMax.style.display = 'none';
+      loginBtn.disabled = false;
     }
-    event.preventDefault();
-    login()
-  })
-  
+  });
 
+  // Prevent form from reloading the page and handle login
+  loginForm?.addEventListener("submit", async (event) => {
+    event.preventDefault(); // Prevent default form submission
+
+    // Additional check before calling the login function
+    if (loginPassword.value.length < 6 || loginPassword.value.length > 20) return;
+
+    await login();
+  });
 };
-
 
 async function login() {
   const email = document.getElementById('loginEmail').value;
   const password = document.getElementById('loginPassword').value;
-
-  const fetchUrl = url + "/login"; 
+  const fetchUrl = url + "/login";
 
   try {
     const response = await fetch(fetchUrl, {
@@ -45,16 +60,11 @@ async function login() {
     const json = await response.json();
     console.log('Login successful:', json);
     alert('Login successful!');
-    localStorage.setItem('token', json.token); 
+    localStorage.setItem('token', json.token);
     localStorage.setItem('email', email);
     window.location.href = './index.html';
   } catch (error) {
     console.error(error.message);
-    alert(error.message); 
+    alert(error.message);
   }
 }
-
-
-
-
-

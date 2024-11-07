@@ -1,27 +1,44 @@
 import { url } from "./config.js";
 
 window.onload = function() {
-  const token = localStorage.getItem('token'); 
+  const token = localStorage.getItem('token');
   if (token) {
-    window.location.href = './index.html'; 
+    window.location.href = './index.html';
   }
 
+  const registerForm = document.getElementById('registerForm');
+  const signUpBtn = document.getElementById('signUpBtn');
   
-  const loginForm = document.getElementById('loginForm');
-  
-  loginForm?.addEventListener("submit", (event) => {
-    event.preventDefault();
-    login();
+  // Enable the Sign Up button if both fields are valid
+  document.getElementById('registerEmail').addEventListener('input', toggleSignUpButton);
+  document.getElementById('registerPassword').addEventListener('input', toggleSignUpButton);
+
+  // Listen for form submit and prevent default
+  registerForm.addEventListener('submit', async (event) => {
+    event.preventDefault(); // Prevent the form from reloading the page
+    await register();
   });
 };
 
-async function login() {
-  const email = document.getElementById('loginEmail').value;
-  const password = document.getElementById('loginPassword').value;
+function toggleSignUpButton() {
+  const email = document.getElementById('registerEmail').value;
+  const password = document.getElementById('registerPassword').value;
+  const signUpBtn = document.getElementById('signUpBtn');
+  
+  // Basic validation: enable the button if both fields are non-empty
+  if (email && password.length >= 6) {
+    signUpBtn.disabled = false;
+  } else {
+    signUpBtn.disabled = true;
+  }
+}
 
-  const fetchUrl = url + "/login";
+async function register() {
+  const email = document.getElementById('registerEmail').value;
+  const password = document.getElementById('registerPassword').value;
+
   try {
-    const response = await fetch(fetchUrl, {
+    const response = await fetch(url + '/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -31,14 +48,16 @@ async function login() {
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(`Login failed: ${errorData.error}`);
+      throw new Error(`Registration failed: ${errorData.error}`);
     }
 
     const json = await response.json();
-    console.log('Login successful:', json);
-    alert('Login successful!');
-    localStorage.setItem('token', json.token); 
-    window.location.href = './index.html';
+    console.log('Registration successful:', json);
+    alert('Registration successful!');
+    localStorage.setItem('registerEmail', email);
+    localStorage.setItem('registerPassword', password);
+    localStorage.setItem('sendedRegistrationCode', true); 
+    window.location.href = './verify-register.html';
   } catch (error) {
     console.error(error.message);
     alert(error.message); 
