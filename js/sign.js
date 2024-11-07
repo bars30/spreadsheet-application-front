@@ -1,4 +1,4 @@
-import { url  } from "./config.js";
+import { url } from "./config.js";
 
 window.onload = function() {
   const token = localStorage.getItem('token'); 
@@ -6,28 +6,20 @@ window.onload = function() {
     window.location.href = './index.html'; 
   }
 
+  
   const loginForm = document.getElementById('loginForm');
-
-  loginForm?.addEventListener("submit", (event)=>{
-    if (loginPassword.value.length < 6) {
-      event.preventDefault();
-      return;
   
-    }
+  loginForm?.addEventListener("submit", (event) => {
     event.preventDefault();
-    login()
-  })
-  
-
+    login();
+  });
 };
-
 
 async function login() {
   const email = document.getElementById('loginEmail').value;
   const password = document.getElementById('loginPassword').value;
 
-  const fetchUrl = url + "/login"; 
-
+  const fetchUrl = url + "/login";
   try {
     const response = await fetch(fetchUrl, {
       method: 'POST',
@@ -46,15 +38,9 @@ async function login() {
     console.log('Login successful:', json);
     alert('Login successful!');
     localStorage.setItem('token', json.token); 
-    localStorage.setItem('email', email);
     window.location.href = './index.html';
   } catch (error) {
     console.error(error.message);
     alert(error.message); 
-  }
+  } 
 }
-
-
-
-
-
