@@ -57,7 +57,7 @@ window.onload = function() {
   
   function createCell(rowNumber, colLetter) {
     const cell = document.createElement('input');
-    cell.type = 'text';
+    cell.type = 'number';
     cell.id = `${colLetter}${rowNumber}`;
     cell.classList.add('cell');
     cell.onkeydown = handleKeyDown;
