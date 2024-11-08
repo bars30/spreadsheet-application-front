@@ -165,6 +165,9 @@ h3.email {
  color: white;
  padding: 8px 35px;
 }
+.signOutButton:hover {
+ background-color: #c35e5e;
+}
 .button_cont button:nth-child(2){
  margin-left: 15px;
 }
