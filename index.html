@@ -26,14 +26,19 @@
 <body>
 <div class="cell-cont">
   <div class="container toolbar-cont">
+    <div class="user_cont">
+      <div class="user-img_cont">
+        <img src="./img/user1.png" alt="">
+      </div>
     <h3 class="email"></h3>
+    </div>
     <div class="button_cont">
       <button onclick="signOut()" class="signOutButton">Sign Out</button>
     </div>
    </div>
    <div class="rate-input-container">
     <label for="customRate">Set your rate:</label>
-    <input type="text" id="customRate" value="0.1" oninput="handleCustomRate()" class="cell" style="background-color: #FFC000;" />
+    <input type="text" id="customRate" value="1" oninput="handleCustomRate()" class="cell" style="background-color: #F4F5F5;" />
   </div>
    <div class="container spreadsheet" id="spreadsheet-cont">
     <div id="spreadsheet" class="spreadsheet">

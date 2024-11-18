@@ -1,4 +1,5 @@
 window.onload = function() {
+  
     const token = localStorage.getItem('token');
     const inputs = document.querySelectorAll('.cell');
     const signOutButton = document.querySelector('.signOutButton');
@@ -34,26 +35,105 @@ window.onload = function() {
   const cellFormulas = {};
   let activeFormulaCell = null;
   let lastDValue = 100;
-  let lastEValue = 0.1;
+  let lastEValue = 1;
   let lastFValue = 600;
-  
-  function updateGCells(startRowNumber) {
-    let previousGValue = parseFloat(document.getElementById(`G${startRowNumber - 1}`)?.value.trim()) || 0;
-  
-    for (let rowNumber = startRowNumber; rowNumber <= rowCount; rowNumber++) {
-      const dValue = parseFloat(document.getElementById(`D${rowNumber}`)?.value.trim()) || 0;
-      const eValue = parseFloat(document.getElementById(`E${rowNumber}`)?.value.trim()) || 0.1;
-  
-      const gValue = (previousGValue + dValue) * eValue + (previousGValue + dValue);
-     
-      const gCell = document.getElementById(`G${rowNumber}`);
-      if (gCell) {
-        gCell.value = gValue.toFixed(2); 
-      }
-  
-      previousGValue = gValue; 
-    }
+
+  function getDValues() {
+    const dValues = [];
+    for (let row = 2; row <= rowCount; row++) {
+      const dCell = document.getElementById(`D${row}`);
+      if (dCell) {
+        const value = parseFloat(dCell.value.trim()) || 0; 
+        dValues.push(value);
+      }
+    }
+    // console.log(dValues);
+    
+    return dValues;
   }
+
+  function getEValues() {
+    const eValues = [];
+    for (let row = 2; row <= rowCount; row++) {
+      const eCell = document.getElementById(`E${row}`);
+      if (eCell) {
+        const value = parseFloat(eCell.value.trim()) || 0; 
+        eValues.push(value);
+      }
+    }
+    // console.log(eValues);
+    
+    return eValues;
+  }
+
+  async function fetchGValues() {
+    valuesD = getDValues()
+    valuesE = getEValues()
+    try {
+      const response = await fetch('http://localhost:3000/calculateGValues', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "dValues": valuesD, 
+          "rateValue": valuesE
+        }),
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`Registration failed: ${errorData.error}`);
+      }
+  
+      const json = await response.json();
+      // console.log(json);
+
+      updateGCells(json);
+    } catch (error) {
+      console.error(error.message);
+      alert(error.message); 
+    } 
+  }
+  
+  
+  
+  function getColumnValues(column) {
+    const values = [];
+    for (let row = 2; row <= rowCount; row++) {
+      const cell = document.getElementById(`${column}${row}`);
+      if (cell) {  // Проверка на существование элемента
+        values.push(parseFloat(cell.value) || 0);
+      } else {
+        console.warn(`Ячейка ${column}${row} не найдена`);
+      }
+    }
+    return values;
+  }
+  
+  
+  function getRateValue() {
+    return parseFloat(document.getElementById('customRate').value) || 0.1;
+  }  
+
+  function updateGCells(gValues) {
+    // console.log(gValues);
+    
+    // Проверяем, является ли gValues массивом
+    if (Array.isArray(gValues)) {
+      gValues.forEach((gValue, index) => {
+        const gCell = document.getElementById(`G${index + 2}`); // +2 to start from G2
+        if (gCell) {
+          gCell.value = gValue.toFixed(2); // Ensure value is displayed with 2 decimals
+        }
+      });
+    } else {
+      // console.error("Ошибка: gValues не является массивом", gValues);
+      return; // If not an array, return and stop execution
+    }
+  }
+  
+
   
   function createCell(rowNumber, colLetter) {
     const cell = document.createElement('input');
@@ -64,10 +144,10 @@ window.onload = function() {
     cell.onclick = handleCellClick;
   
     if (colLetter === 'G') {
-      cell.style.backgroundColor = "#E2EFDA";
+      cell.style.backgroundColor ="#cfedbc";
       cell.disabled = true;
     } else if (colLetter === 'A') {
-      cell.style.backgroundColor = '#e8eef8';
+      cell.style.backgroundColor = '#5882cb8c';
       cell.oninput = () => handleAColumnInput(rowNumber);
     } else if (colLetter === 'D') {
       cell.style.backgroundColor = "#ffe699";
@@ -79,13 +159,9 @@ window.onload = function() {
       cell.style.backgroundColor = "#FFC000";
     } else if (colLetter === 'E') {
       cell.style.backgroundColor = "#fff2cc";
-      if (rowNumber > 2) {
-        cell.value = lastEValue; 
-      } else {
-        cell.value = 0.1;
-      }
+      cell.value = lastEValue; 
       cell.oninput = () => handleEColumnInput(rowNumber);
-    } else if (colLetter = "F"){
+    } else if (colLetter === "F"){
       cell.oninput = () => handleFColumnInput(rowNumber);
     }
   
@@ -143,7 +219,8 @@ window.onload = function() {
     }
   
     
-    updateGCells(rowNumber);
+  //   updateGCells(rowNumber);
+  fetchGValues();
   }
   
   function addRow() {
@@ -185,6 +262,7 @@ window.onload = function() {
     spreadsheet.appendChild(row);
    
     updateGCells(rowCount);
+  fetchGValues();
    
     rowCount++;
   }
@@ -280,8 +358,11 @@ window.onload = function() {
         if (eCell) {
           eCell.value = rateValue; 
           updateGCells(r); 
+          console.log("up");
+          
         }
       }
+      fetchGValues()
     }
   }
   
@@ -300,6 +381,7 @@ window.onload = function() {
     }
   
     updateGCells(rowNumber);
+    fetchGValues();
   }
   
   
@@ -349,4 +431,4 @@ window.onload = function() {
   }
   
   initializeRows(); 
-  
+  fetchGValues(); 

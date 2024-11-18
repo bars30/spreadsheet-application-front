@@ -33,12 +33,14 @@ function toggleSignUpButton() {
   }
 }
 
+
 async function register() {
   const email = document.getElementById('registerEmail').value;
   const password = document.getElementById('registerPassword').value;
 
+
   try {
-    const response = await fetch(url + '/register', {
+    const response = await fetch('http://localhost:3000/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
