@@ -12,7 +12,6 @@ window.onload = function() {
   const passwordError = document.getElementById('passwordError');
   const passwordErrorMax = document.getElementById('passwordErrorMax');
 
-  // Validate password length
   loginPassword.addEventListener('input', () => {
     if (loginPassword.value.length < 6) {
       passwordError.style.display = 'inline';
@@ -27,11 +26,9 @@ window.onload = function() {
     }
   });
 
-  // Prevent form from reloading the page and handle login
   loginForm?.addEventListener("submit", async (event) => {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
 
-    // Additional check before calling the login function
     if (loginPassword.value.length < 6 || loginPassword.value.length > 20) return;
 
     await login();

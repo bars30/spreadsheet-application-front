@@ -9,11 +9,10 @@ window.onload = function() {
   const registerForm = document.getElementById('registerForm');
   const signUpBtn = document.getElementById('signUpBtn');
   
-  // Enable the Sign Up button if both fields are valid
   document.getElementById('registerEmail').addEventListener('input', toggleSignUpButton);
   document.getElementById('registerPassword').addEventListener('input', toggleSignUpButton);
 
-  // Listen for form submit and prevent default
+
   registerForm.addEventListener('submit', async (event) => {
     event.preventDefault(); // Prevent the form from reloading the page
     await register();
@@ -25,7 +24,7 @@ function toggleSignUpButton() {
   const password = document.getElementById('registerPassword').value;
   const signUpBtn = document.getElementById('signUpBtn');
   
-  // Basic validation: enable the button if both fields are non-empty
+
   if (email && password.length >= 6) {
     signUpBtn.disabled = false;
   } else {
@@ -40,7 +39,7 @@ async function register() {
 
 
   try {
-    const response = await fetch('http://localhost:3000/register', {
+    const response = await fetch(url + '/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

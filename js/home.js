@@ -5,6 +5,7 @@ window.onload = function() {
     const signOutButton = document.querySelector('.signOutButton');
     const notification = document.querySelector('.notification');
     const toolbarCont = document.querySelector('.toolbar-cont');
+  
     localStorage.removeItem('registerPassword');
     if (!token) {
       inputs.forEach(input => input.disabled = true);
@@ -25,9 +26,9 @@ window.onload = function() {
   function signOut() {
     localStorage.removeItem('token');
     localStorage.removeItem('email');
+  localStorage.clear();
     window.location.href = './index.html';
   localStorage.clear();
-
   }
   
   let rowCount = 2;
@@ -47,7 +48,6 @@ window.onload = function() {
         dValues.push(value);
       }
     }
-    // console.log(dValues);
     
     return dValues;
   }
@@ -61,7 +61,6 @@ window.onload = function() {
         eValues.push(value);
       }
     }
-    // console.log(eValues);
     
     return eValues;
   }
@@ -87,7 +86,6 @@ window.onload = function() {
       }
   
       const json = await response.json();
-      // console.log(json);
 
       updateGCells(json);
     } catch (error) {
@@ -102,11 +100,9 @@ window.onload = function() {
     const values = [];
     for (let row = 2; row <= rowCount; row++) {
       const cell = document.getElementById(`${column}${row}`);
-      if (cell) {  // Проверка на существование элемента
+      if (cell) { 
         values.push(parseFloat(cell.value) || 0);
-      } else {
-        console.warn(`Ячейка ${column}${row} не найдена`);
-      }
+      } 
     }
     return values;
   }
@@ -117,19 +113,15 @@ window.onload = function() {
   }  
 
   function updateGCells(gValues) {
-    // console.log(gValues);
-    
-    // Проверяем, является ли gValues массивом
     if (Array.isArray(gValues)) {
       gValues.forEach((gValue, index) => {
-        const gCell = document.getElementById(`G${index + 2}`); // +2 to start from G2
+        const gCell = document.getElementById(`G${index + 2}`); 
         if (gCell) {
-          gCell.value = gValue.toFixed(2); // Ensure value is displayed with 2 decimals
+          gCell.value = gValue.toFixed(2); 
         }
       });
     } else {
-      // console.error("Ошибка: gValues не является массивом", gValues);
-      return; // If not an array, return and stop execution
+      return;
     }
   }
   
@@ -169,10 +161,7 @@ window.onload = function() {
   }
   
   function handleFColumnInput(rowNumber) {
-    console.log(rowNumber);
-    
     const currentCell = document.getElementById(`F${rowNumber}`);
-    
   
     const value = currentCell.value;
     lastFValue = value;
@@ -203,8 +192,6 @@ window.onload = function() {
   
 
   function handleDColumnInput(rowNumber) {
-    console.log(rowNumber);
-    
     const currentCell = document.getElementById(`D${rowNumber}`);
     const value = currentCell.value;
   
@@ -218,8 +205,6 @@ window.onload = function() {
       }
     }
   
-    
-  //   updateGCells(rowNumber);
   fetchGValues();
   }
   
@@ -358,8 +343,6 @@ window.onload = function() {
         if (eCell) {
           eCell.value = rateValue; 
           updateGCells(r); 
-          console.log("up");
-          
         }
       }
       fetchGValues()
