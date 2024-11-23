@@ -66,8 +66,9 @@ window.onload = function() {
   }
 
   async function fetchGValues() {
-    valuesD = getDValues()
-    valuesE = getEValues()
+    const valuesD = getDValues();
+    const valuesE = getEValues();
+  
     try {
       const response = await fetch('http://localhost:3000/calculateGValues', {
         method: 'POST',
@@ -75,22 +76,33 @@ window.onload = function() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          "dValues": valuesD, 
-          "rateValue": valuesE
+          dValues: valuesD,
+          rateValue: valuesE,
         }),
       });
   
       if (!response.ok) {
         const errorData = await response.json();
+        console.error('Error:', errorData);
+        return;
       }
   
-      const json = await response.json();
-
-      updateGCells(json);
+      const { gValues, interestValues } = await response.json();
+  
+      updateGCells(gValues);       
+      updateInterestCells(interestValues); 
     } catch (error) {
       console.error(error.message);
+    }
+  }
   
-    } 
+
+
+  function updateInterestCells(interestValues) {
+    interestValues.forEach((interest, index) => {
+      const interestCell = document.getElementById(`F${index + 2}`);
+      interestCell.value = interest.toFixed(2); 
+    });
   }
   
   
@@ -131,8 +143,6 @@ window.onload = function() {
     cell.type = 'number';
     cell.id = `${colLetter}${rowNumber}`;
     cell.classList.add('cell');
-    cell.onkeydown = handleKeyDown;
-    cell.onclick = handleCellClick;
   
     if (colLetter === 'G') {
       cell.style.backgroundColor ="#cfedbc";
@@ -254,68 +264,7 @@ window.onload = function() {
    
     rowCount++;
   }
-  
-  function moveToNextCell(currentCell) {
-    const currentRow = currentCell.parentElement;
-    const cells = Array.from(currentRow.querySelectorAll('.cell'));
-    const currentIndex = cells.indexOf(currentCell);
-  
-    if (currentIndex >= 0 && currentIndex < cells.length - 1) {
-      const nextCell = cells[currentIndex + 1];
-      nextCell.focus(); 
-    }
-  }
-  
-  function handleKeyDown(event) {
-    const cell = event.target;
-  
-    if (event.key === '=' && !activeFormulaCell) {
-      activeFormulaCell = cell;
-      cell.value = '';
-    }
-  
-    if (event.key === 'Enter' && activeFormulaCell) {
-      evaluateCell(activeFormulaCell); 
-      moveToNextCell(cell); 
-      activeFormulaCell = null;
-    }
-  }
-  
-  function handleCellClick(event) {
-    const clickedCell = event.target;
-    if (activeFormulaCell) {
-      activeFormulaCell.value += clickedCell.id;
-      activeFormulaCell.focus();
-      highlightCell(clickedCell);
-    }
-  }
-  
-  function highlightCell(cell) {
-    const allCells = document.querySelectorAll('.cell');
-    allCells.forEach(c => c.classList.remove('highlight'));
-    cell.classList.add('highlight');
-  }
-  
-  function evaluateCell(cell) {
-    const value = cell.value.trim();
-  
-    if (value.startsWith('=')) {
-      const formula = value.slice(1);
-      const formulaWithValues = formula.replace(/[A-J][0-9]+/g, function(match) {
-        const referencedCell = document.getElementById(match);
-        return referencedCell ? parseFloat(referencedCell.value) || 0 : 0;
-      });
-  
-      try {
-        const result = eval(formulaWithValues); 
-        cell.value = result.toFixed(2); 
-      } catch (error) {
-        cell.value = 'ERROR'; 
-      }
-    } else {
-      cellFormulas[cell.id] = value; 
-    }
-  }
+
 
   function updateCells() {
     const rateValue = parseFloat(document.getElementById('customRate').value) || 0.1;
