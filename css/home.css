@@ -38,7 +38,10 @@ h3.email {
 .row:nth-child(1) .row-number{
  border-top-left-radius: 15px;
 }
-.row:nth-child(1) input:nth-last-child(), #I1 {
+.row:nth-child(1) input:nth-last-child(), #I1, #G1 {
+ border-top-right-radius: 15px;
+}
+#G1 {
  border-top-right-radius: 15px;
 }
 input#I1 {
@@ -81,7 +84,7 @@ input#I1 {
 .row {
  width: 100%;
  display: grid;
- grid-template-columns: 30px repeat(7, minmax(100px, 1fr)); 
+ grid-template-columns: 30px repeat(5, minmax(100px, 1fr)); 
  gap: 10px; 
  margin-bottom: 0px;
  grid-gap: 0px

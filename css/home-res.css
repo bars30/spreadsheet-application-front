@@ -1,8 +1,5 @@
 
 @media only screen and (max-width: 1040px){
-  .row {
-    grid-template-columns: 30px 100px 140px repeat(7, minmax(99px, 1fr));
-  }
   .spreadsheet {
     overflow-x: scroll;
   }

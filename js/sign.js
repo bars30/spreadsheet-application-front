@@ -54,7 +54,6 @@ async function register() {
 
     const json = await response.json();
     console.log('Registration successful:', json);
-    alert('Registration successful!');
     localStorage.setItem('registerEmail', email);
     localStorage.setItem('registerPassword', password);
     localStorage.setItem('sendedRegistrationCode', true); 

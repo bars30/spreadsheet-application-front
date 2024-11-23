@@ -44,7 +44,16 @@ input {
  border: 1px solid #ccc;
  border-radius: 5px;
 }
-
+.site-header img {
+ max-height: 50px;
+ display: block;
+ margin: auto;
+}
+.site-header {
+ width: 90%;
+ margin: auto;
+ padding-top: 15px;
+}
 
 
 

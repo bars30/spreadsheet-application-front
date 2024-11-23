@@ -32,7 +32,7 @@ window.onload = function() {
   }
   
   let rowCount = 2;
-  let colCount = 9; 
+  let colCount = 7; 
   const cellFormulas = {};
   let activeFormulaCell = null;
   let lastDValue = 100;
@@ -82,7 +82,6 @@ window.onload = function() {
   
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(`Registration failed: ${errorData.error}`);
       }
   
       const json = await response.json();
@@ -90,7 +89,7 @@ window.onload = function() {
       updateGCells(json);
     } catch (error) {
       console.error(error.message);
-      alert(error.message); 
+  
     } 
   }
   
@@ -141,6 +140,9 @@ window.onload = function() {
     } else if (colLetter === 'A') {
       cell.style.backgroundColor = '#5882cb8c';
       cell.oninput = () => handleAColumnInput(rowNumber);
+      if(rowNumber > 2){
+        cell.disabled = true;
+      }
     } else if (colLetter === 'D') {
       cell.style.backgroundColor = "#ffe699";
       cell.value = lastDValue;
@@ -154,6 +156,7 @@ window.onload = function() {
       cell.value = lastEValue; 
       cell.oninput = () => handleEColumnInput(rowNumber);
     } else if (colLetter === "F"){
+      cell.disabled = true;
       cell.oninput = () => handleFColumnInput(rowNumber);
     }
   
