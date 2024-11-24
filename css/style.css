@@ -45,9 +45,10 @@ input {
  border-radius: 5px;
 }
 .site-header img {
- max-height: 30px;
+ max-height: 60px;
  display: block;
  margin: auto;
+ border-radius: 9px;
 }
 .site-header {
  width: 90%;
