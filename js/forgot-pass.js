@@ -26,5 +26,6 @@ document.getElementById('requestCodeBtn').addEventListener('click', async () => 
         window.location.href = './reset-password.html?email=' + encodeURIComponent(email);
     } catch (error) {
         console.error(error.message);
+        alert(error);
     }
 });
