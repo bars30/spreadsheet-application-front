@@ -28,7 +28,6 @@ document.getElementById('resetPassForm').addEventListener('submit', async (event
         }
 
         const result = await response.json();
-        alert(result.message);
         window.location.href = './index.html'; 
     } catch (error) {
         console.error(error.message);

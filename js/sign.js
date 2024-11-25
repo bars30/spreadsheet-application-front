@@ -47,19 +47,17 @@ async function register() {
       body: JSON.stringify({ email, password }),
     });
 
-    if (!response.ok) {
+    if (!response.ok) { 
       const errorData = await response.json();
       throw new Error(`Registration failed: ${errorData.error}`);
     }
 
     const json = await response.json();
-    console.log('Registration successful:', json);
-    localStorage.setItem('registerEmail', email);
-    localStorage.setItem('registerPassword', password);
-    localStorage.setItem('sendedRegistrationCode', true); 
-    window.location.href = './verify-register.html';
+    localStorage.setItem('token', json.token);
+    localStorage.setItem('email', email);
+    window.location.href = './index.html';
   } catch (error) {
     console.error(error.message);
     alert(error.message); 
   } 
-}
+} 

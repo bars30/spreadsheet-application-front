@@ -55,7 +55,6 @@ async function login() {
     }
 
     const json = await response.json();
-    console.log('Login successful:', json);
     localStorage.setItem('token', json.token);
     localStorage.setItem('email', email);
     window.location.href = './index.html';

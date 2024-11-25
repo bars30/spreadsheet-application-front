@@ -1,7 +1,7 @@
 .cont {
  width: 26%;
  margin: auto;
- padding: 100px 0 25px !important;
+ padding: 25px 0 25px !important;
  display: flex;
  justify-content: space-between;
 }
